@@ -1,4 +1,4 @@
-
+[
   {
     "id": 1,
     "from": "Prague",
@@ -269,3 +269,4 @@
       { "id": 4, "number": "B2", "available": true }
     ]
   }
+]

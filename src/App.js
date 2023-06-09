@@ -14,7 +14,7 @@ function App() {
       .get("/data.json")
       .then((response) => {
         console.log(response.data)
-        setFlights(response.data.flights);
+        setFlights(response.data);
       })
       .catch((error) => {
         console.error(error);
