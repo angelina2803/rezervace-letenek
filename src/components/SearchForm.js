@@ -10,28 +10,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
-const SearchForm = ({ create }) => {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [value, setValue] = React.useState(dayjs("2022-04-17"));
-  const [duration, setDuration] = useState("");
+const SearchForm = ({ search }) => {
 
-//   const addNewPost = (e) => {
-//     e.preventDefault();
-//     const newPost = {
-//       id: Date.now(),
-//       from,
-//       to,
-//       value,
-//       duration,
-//       //   selectedDate: formatSelectedDate(selectedDate.toISOString()),
-//     };
-//     create(newPost);
-//     setFrom("");
-//     setTo("");
-//     setValue("");
-//     setDuration("");
-//   };
+  const [value, setValue] = React.useState(dayjs("2022-04-17"));
+
+  search()
 
   const countries = [
     { code: "AD", label: "Andorra", phone: "376" },
@@ -560,18 +543,17 @@ const SearchForm = ({ create }) => {
           />
         </DemoContainer>
       </LocalizationProvider>
-      <Box sx={{ width: 1000 }}>
+      <Box sx={{ width: 1000, marginBottom: '20px' }}>
         <Slider
           className="slider"
           aria-label="Custom marks"
-          defaultValue={20}
+          defaultValue={2}
           getAriaValueText={valuetext}
-          step={10}
-          valueLabelDisplay="auto"
+          step={1}
           marks={marks}
         />
       </Box>
-      <Button variant="outlined" className="myBtn">
+      <Button variant="outlined" className="myBtn" onClick={search}>
         Vyhledat{" "}
         <svg
           xmlns="http://www.w3.org/2000/svg"

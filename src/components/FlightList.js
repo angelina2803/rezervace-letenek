@@ -13,8 +13,10 @@ const columns = [
 
 const FlightList = ({ flights = [] }) => {
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div>
+    <div style={{ height: 400, width: "100%", marginTop: '30px', marginBottom:'30px'}}>
       <DataGrid
+        className="flightList"
         rows={flights}
         columns={columns}
         initialState={{
@@ -25,6 +27,7 @@ const FlightList = ({ flights = [] }) => {
         pageSizeOptions={[5, 10]}
         checkboxSelection
       />
+      </div>
       <Button variant="outlined" className="myBtn"> Vybrat</Button>
     </div>
   );
