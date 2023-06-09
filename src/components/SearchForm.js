@@ -4,6 +4,9 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import MyInput from "./UI/input/MyInput";
+import MyButton from "./UI/button/MyButton" 
+
 
 const SearchForm = ({ create }) => {
   const [from, setFrom] = useState("");
@@ -30,35 +33,35 @@ const SearchForm = ({ create }) => {
 
   return (
     <form className="formAdd">
-      <input
+      <MyInput
         value={from}
         onChange={(e) => setFrom(e.target.value)}
         type="text"
         placeholder="Přidat letiště"
-      ></input>
-      <input
+      ></MyInput>
+      <MyInput
         value={to}
         onChange={(e) => setTo(e.target.value)}
         type="text"
         placeholder="Přílet do"
-      ></input>
+      ></MyInput>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker", "DatePicker"]}>
           <DatePicker label="Datum odletu" defaultValue={dayjs("2022-04-17")} />
-          <DatePicker
+          <DatePicker className="DatePicker_Datum"
             label="Datum návratu"
             value={value}
             onChange={(newValue) => setValue(newValue)}
           />
         </DemoContainer>
       </LocalizationProvider>
-      <input
+      <MyInput
         value={duration}
         onChange={(e) => setDuration(e.target.value)}
         type="text"
         placeholder="Délka letů"
-      ></input>
-      <button onClick={addNewPost}>Hledat</button>
+      ></MyInput>
+      <MyButton className="myBtn" onClick={addNewPost}>Hledat</MyButton>
     </form>
   );
 };

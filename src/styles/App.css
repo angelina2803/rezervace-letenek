@@ -33,3 +33,17 @@ h2{
 h4 {
 	font-size: 36px;
 }
+/* Uvod */
+.text{
+  width: 1000px;
+  margin: 20px;
+}
+.container_uvod{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* DatePicker */
+.DatePicker_Datum{
+  color: rgb(138, 177, 245);
+}

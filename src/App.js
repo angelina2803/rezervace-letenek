@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './styles/App.css';
 import SearchForm from './components/SearchForm';
-import flightsData from './services/flightsData';
+import axios from "axios";
 
 
 function App() {
+
+  const [flights, setFlights] = useState([]);
+  const [seats, setSeats] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/public/data.json")
+      .then((response) => {
+        setFlights(response.data.flights);
+        setSeats(response.data.flights.seats);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   
   const createPost = (newPost) =>{
     setFlights([...flights, newPost])
