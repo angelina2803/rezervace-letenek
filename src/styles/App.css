@@ -45,3 +45,14 @@ h4 {
   justify-content: center;
   align-items: center;
 }
+.autocomplete{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.slider{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.myBtn{
+  margin-top: 20px;
+}

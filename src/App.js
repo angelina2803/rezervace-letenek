@@ -2,33 +2,30 @@ import React, {useState, useEffect} from 'react';
 import './styles/App.css';
 import SearchForm from './components/SearchForm';
 import axios from "axios";
+import FlightList from './components/FlightList';
 
 
 function App() {
 
   const [flights, setFlights] = useState([]);
-  const [seats, setSeats] = useState([]);
 
   useEffect(() => {
     axios
-      .get("/public/data.json")
+      .get("/data.json")
       .then((response) => {
+        console.log(response.data)
         setFlights(response.data.flights);
-        setSeats(response.data.flights.seats);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
   
-  const createPost = (newPost) =>{
-    setFlights([...flights, newPost])
-}
   
   return (
     <div className="App">
-    <SearchForm create={createPost}/> 
-    {/* <FlightList flight={flights} seats={seats}/> */}
+    <SearchForm/> 
+    <FlightList flights={flights}/>
     </div>
   );
 }
