@@ -3,6 +3,7 @@ import axios from "axios";
 import FlightList from "../components/FlightList";
 
 const flightsData = () => {
+
   const [flights, setFlights] = useState([]);
   const [seats, setSeats] = useState([]);
 
@@ -30,7 +31,7 @@ const flightsData = () => {
         <p>{el.number}</p>,
         <p>{el.available}</p>);
       })} */}
-      <FlightList/>
+      <FlightList flight={flights} seats={seats}/>
     </div>
   );
 };
