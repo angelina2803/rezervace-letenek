@@ -27,7 +27,7 @@ h1, h2, h3, h4, h5, h6 {
 h2{
   text-align: center;
   margin-top: 60px;
-  color: rgb(138, 177, 245);
+  color: rgb(6, 42, 100);
   font-size: 36px;
 }
 h4 {
@@ -37,13 +37,11 @@ h4 {
 .text{
   width: 1000px;
   margin: 20px;
+  color: rgb(138, 177, 245);
+  
 }
 .container_uvod{
   display: flex;
   justify-content: center;
   align-items: center;
-}
-/* DatePicker */
-.DatePicker_Datum{
-  color: rgb(138, 177, 245);
 }
