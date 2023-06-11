@@ -40,6 +40,12 @@ h4 {
   color: rgb(138, 177, 245);
   
 }
+.container_uvod{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* RezervationForm */
 .text2{
   color: rgb(138, 177, 245);
 }
@@ -47,11 +53,7 @@ h4 {
   margin-top: 10px;
   font-size: 15px;
 }
-.container_uvod{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 /* FlightList */
 .autocomplete{
   margin-top: 20px;

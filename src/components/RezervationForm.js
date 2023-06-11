@@ -13,27 +13,27 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 
 const RezervationForm = () => {
+  const [checked, setChecked] = React.useState([1]);
 
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
 
-    const [checked, setChecked] = React.useState([1]);
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
 
-    const handleToggle = (value) => () => {
-      const currentIndex = checked.indexOf(value);
-      const newChecked = [...checked];
-  
-      if (currentIndex === -1) {
-        newChecked.push(value);
-      } else {
-        newChecked.splice(currentIndex, 1);
-      }
-  
-      setChecked(newChecked);
-    };
-  
-//   Modal
+    setChecked(newChecked);
+  };
+
+  //   Modal
   const style = {
     position: "absolute",
     top: "50%",
@@ -50,9 +50,17 @@ const RezervationForm = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [showAlert, setShowAlert] = useState(false);
+
+  const openAlertForm = () => {
+    setShowAlert(true);
+  };
+
   return (
     <div className="containerModal">
-      <Button variant="outlined" onClick={handleOpen}>Vybrat</Button>
+      <Button variant="outlined" onClick={handleOpen}>
+        Vybrat
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -60,73 +68,85 @@ const RezervationForm = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <h3 className="text2">Rezervace</h3>
-        <p className="text3">Jméno a příjmení uveďte ve stejném tvaru, v jakém je uvedeno na cestovním dokladu.</p>
-        <Box sx={{ "& > :not(style)": { m: 1 }}} className="UserInfo">
-          <FormControl variant="standard">
-            <InputLabel htmlFor="input-with-icon-adornment">Jméno</InputLabel>
-            <Input
-              className="UserInfo"
-              id="input-with-icon-adornment"
-              startAdornment={
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <TextField
-            className="UserInfo"
-            id="input-with-icon-textfield"
-            label="Prijmení"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AccountCircle />
-                </InputAdornment>
-              ),
-            }}
-            variant="standard"
-          />
-        </Box>
-
-        {/* další pole pro údaje o cestujícím */}
-        <p className="text2">Vyberte si místo v letadle</p>
-        <List
-          dense
-          sx={{
-            width: "100%",
-            maxWidth: 360,
-            bgcolor: "background.paper",
-            marginBottom: "30px",
-          }}
-        >
-          {["A1", "A2", "B1", "B2"].map((value) => {
-            const labelId = `checkbox-list-secondary-label-${value}`;
-            return (
-              <ListItem
-                key={value}
-                secondaryAction={
-                  <Checkbox
-                    edge="end"
-                    onChange={handleToggle(value)}
-                    checked={checked.indexOf(value) !== -1}
-                    inputProps={{ "aria-labelledby": labelId }}
-                  />
+          <h3 className="text2">Rezervace</h3>
+          <p className="text3">
+            Jméno a příjmení uveďte ve stejném tvaru, v jakém je uvedeno na
+            cestovním dokladu.
+          </p>
+          <Box sx={{ "& > :not(style)": { m: 1 } }} className="UserInfo">
+            <FormControl variant="standard">
+              <InputLabel htmlFor="input-with-icon-adornment">Jméno</InputLabel>
+              <Input
+                className="UserInfo"
+                id="input-with-icon-adornment"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
                 }
-                disablePadding
-              >
-                <ListItemButton>
-                  <ListItemText id={labelId} primary={value} />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
+              />
+            </FormControl>
+            <TextField
+              className="UserInfo"
+              id="input-with-icon-textfield"
+              label="Prijmení"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
+              variant="standard"
+            />
+          </Box>
 
-        <Button variant="outlined" type="submit">
-          Rezervovat
-        </Button>
+          {/* další pole pro údaje o cestujícím */}
+          <p className="text2">Vyberte si místo v letadle</p>
+          <List
+            dense
+            sx={{
+              width: "100%",
+              maxWidth: 360,
+              bgcolor: "background.paper",
+              marginBottom: "30px",
+            }}
+          >
+            {["A1", "A2", "B1", "B2"].map((value) => {
+              const labelId = `checkbox-list-secondary-label-${value}`;
+              return (
+                <ListItem
+                  key={value}
+                  secondaryAction={
+                    <Checkbox
+                      edge="end"
+                      onChange={handleToggle(value)}
+                      checked={checked.indexOf(value) !== -1}
+                      inputProps={{ "aria-labelledby": labelId }}
+                    />
+                  }
+                  disablePadding
+                >
+                  <ListItemButton>
+                    <ListItemText id={labelId} primary={value} />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
+          </List>
+
+          <Button onClick={openAlertForm} variant="outlined" type="submit">
+            Rezervovat
+          </Button>
+          {showAlert && (
+            <Stack sx={{ width: "100%", marginTop: "20px" }} spacing={2}>
+              <Alert severity="success">
+                <AlertTitle>Úspěšná rezervace</AlertTitle>
+                Vaše rezervace byla úspěšně dokončena. Děkujeme za váš zájem o
+                naše služby. 
+              </Alert>
+            </Stack>
+          )}
         </Box>
       </Modal>
     </div>
