@@ -10,11 +10,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
-const SearchForm = ({ search }) => {
+const SearchForm = () => {
 
   const [value, setValue] = React.useState(dayjs("2022-04-17"));
 
-  search()
+  // search()
 
   const countries = [
     { code: "AD", label: "Andorra", phone: "376" },
@@ -553,7 +553,7 @@ const SearchForm = ({ search }) => {
           marks={marks}
         />
       </Box>
-      <Button variant="outlined" className="myBtn" onClick={search}>
+      <Button variant="outlined" className="myBtn">
         Vyhledat{" "}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -574,6 +574,7 @@ const SearchForm = ({ search }) => {
           />
         </svg>
       </Button>
+      
     </form>
   );
 };

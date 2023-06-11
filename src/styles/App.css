@@ -40,11 +40,19 @@ h4 {
   color: rgb(138, 177, 245);
   
 }
+.text2{
+  color: rgb(138, 177, 245);
+}
+.text3{
+  margin-top: 10px;
+  font-size: 15px;
+}
 .container_uvod{
   display: flex;
   justify-content: center;
   align-items: center;
 }
+/* FlightList */
 .autocomplete{
   margin-top: 20px;
   margin-bottom: 20px;
@@ -55,4 +63,10 @@ h4 {
 }
 .flightList{
   margin-top: 20px;
+}
+/* Modal */
+.UserInfo{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 400px;
 }

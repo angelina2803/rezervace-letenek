@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "from", headerName: "From", width: 80 },
-  { field: "to", headerName: "To", width: 130 },
-  { field: "departure", headerName: "Departure", width: 130 },
-  { field: "duration", headerName: "Duration", width: 130 },
-  { field: "price", headerName: "Price", width: 130 },
-];
+import RezervationForm from "./RezervationForm";
 
 const FlightList = ({ flights = [] }) => {
+    const columns = [
+        { field: "id", headerName: "ID", width: 70 },
+        { field: "from", headerName: "From", width: 80 },
+        { field: "to", headerName: "To", width: 130 },
+        { field: "departure", headerName: "Departure", width: 130 },
+        { field: "duration", headerName: "Duration", width: 130 },
+        { field: "price", headerName: "Price", width: 130 },
+      ];
+      
+    //   const [isOpen, setIsOpen] = useState(false);
+      
+    //   const rezervationFormClick = () => {
+    //     setIsOpen(true); 
+    //   }
+
   return (
     <div>
     <div style={{ height: 400, width: "100%", marginTop: '30px', marginBottom:'30px'}}>
@@ -28,7 +35,8 @@ const FlightList = ({ flights = [] }) => {
         checkboxSelection
       />
       </div>
-      <Button variant="outlined" className="myBtn"> Vybrat</Button>
+      {/* <Button variant="outlined" className="myBtn" > Vybrat</Button> */}
+      {/* onClick={rezervationFormClick} {isOpen && <RezervationForm />} */}
     </div>
   );
 };

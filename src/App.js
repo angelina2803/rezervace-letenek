@@ -3,6 +3,7 @@ import "./styles/App.css";
 import SearchForm from "./components/SearchForm";
 import axios from "axios";
 import FlightList from "./components/FlightList";
+import RezervationForm from "./components/RezervationForm";
 
 function App() {
   const [flights, setFlights] = useState([]);
@@ -19,23 +20,34 @@ function App() {
       });
   }, []);
 
-  const getSearch = async ({data}) => {
-    const { data } = await axios.get("data.json");
-    const filteredFlights = data.filter(
-      (flight) =>
-        flight.from === from &&
-        flight.to === to &&
-        flight.departure === departure &&
-        flight.arrival === arrival &&
-        flight.duration === duration,
-    );
-  };
-  getSearch()
+  // const getSearch = async ({ from, to, departure, arrival, duration }) => {
+
+  //     const { data } = await axios.get("data.json");
+  //     const filteredFlights = data.filter(
+  //       (flight) =>
+  //         flight.from === from &&
+  //         flight.to === to &&
+  //         flight.departure === departure &&
+  //         flight.arrival === arrival &&
+  //         flight.duration === duration
+  //     );
+       
+  //     for (let i = 0; i < data.length; i++) {
+  //       const flight = data[i];
+  //       if (filteredFlights === inputValue) {
+  //         console.log(flight);
+  //       }
+  //     }
+  //   }
+  
+  // getSearch();
 
   return (
     <div className="App">
-      <SearchForm search={getSearch} />
+      <SearchForm />
       <FlightList flights={flights} />
+      <RezervationForm/>
+
     </div>
   );
 }
