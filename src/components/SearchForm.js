@@ -11,8 +11,7 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
 const SearchForm = () => {
-
-  const [value, setValue] = React.useState(dayjs("2022-04-17"));
+  const [value, setValue] = React.useState(dayjs("2023-06-12"));
 
   // search()
 
@@ -441,7 +440,7 @@ const SearchForm = () => {
     { code: "ZW", label: "Zimbabwe", phone: "263" },
   ];
 
-  const marks = [
+  const marksDuration = [
     {
       value: 0,
       label: "1h",
@@ -535,7 +534,7 @@ const SearchForm = () => {
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label="Datum odletu" defaultValue={dayjs("2022-04-17")} />
+          <DatePicker label="Datum odletu" defaultValue={dayjs("2023-06-11")} />
           <DatePicker
             label="Datum návratu"
             value={value}
@@ -543,18 +542,17 @@ const SearchForm = () => {
           />
         </DemoContainer>
       </LocalizationProvider>
-      
-      <Box sx={{ width: 1000, marginBottom: '20px' }}>
-      <p className="textLabel">Delka letů</p>
+
+      <Box sx={{ width: 1000, marginBottom: "20px" }}>
+        <p className="textLabel">Delka letů</p>
         <Slider
           className="slider"
           aria-label="Custom marks"
           defaultValue={2}
           getAriaValueText={valuetext}
           step={1}
-          marks={marks}
+          marks={marksDuration}
         />
-    
       </Box>
       <Button variant="outlined" className="myBtn">
         Vyhledat{" "}
@@ -577,7 +575,6 @@ const SearchForm = () => {
           />
         </svg>
       </Button>
-      
     </form>
   );
 };
