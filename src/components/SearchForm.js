@@ -12,20 +12,24 @@ import Slider from "@mui/material/Slider";
 
 const SearchForm = () => {
   const [value, setValue] = React.useState(dayjs("2023-06-12"));
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
+  const [duration, setDuration] = useState();
+  
 
 
   const countries = [
-    { code: "CZ", label: "Prague", phone: "420" },
-    { code: "FR", label: "Paris", phone: "33" },
-    { code: "IT", label: "Rome", phone: "06" },
-    { code: "GB", label: "London", phone: "826" },
-    { code: "ES", label: "Barcelona", phone: "724" },
-    { code: "DE", label: "Berlin", phone: "276" },
-    { code: "AT", label: "Vienna", phone: "040" },
-    { code: "PT", label: "Lisbon", phone: "620" },
-    { code: "GR", label: "Athens", phone: "300" },
-    { code: "ES", label: "Madrid", phone: "724" },
-    { code: "NL", label: "Amsterdam", phone: "528" },
+    { code: "CZ", label: "Prague"},
+    { code: "FR", label: "Paris"},
+    { code: "IT", label: "Rome"},
+    { code: "GB", label: "London" },
+    { code: "ES", label: "Barcelona"},
+    { code: "DE", label: "Berlin" },
+    { code: "AT", label: "Vienna" },
+    { code: "PT", label: "Lisbon"},
+    { code: "GR", label: "Athens"},
+    { code: "ES", label: "Madrid"},
+    { code: "NL", label: "Amsterdam"},
 
   ];
 
@@ -39,7 +43,7 @@ const SearchForm = () => {
       label: "2h",
     },
     {
-      value: 37,
+      value: 30,
       label: "3h",
     },
     {
@@ -49,7 +53,7 @@ const SearchForm = () => {
   ];
 
   function valuetext(value) {
-    return `${value}°C`;
+    return `${value}`;
   }
 
   return (
@@ -58,8 +62,6 @@ const SearchForm = () => {
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
         options={countries}
-        autoHighlight
-        getOptionLabel={(option) => option.label}
         renderOption={(props, option) => (
           <Box
             component="li"
@@ -73,27 +75,24 @@ const SearchForm = () => {
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               alt=""
             />
-            {option.label} ({option.code}) +{option.phone}
+            {option.label} ({option.code})
           </Box>
         )}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Přidat letiště"
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
-            }}
+            value={from}
+            onChange={(newValue) => setFrom(newValue)}
           />
         )}
       />
       <Autocomplete
+        label="Přílet do"
         className="autocomplete"
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
         options={countries}
-        autoHighlight
-        getOptionLabel={(option) => option.label}
         renderOption={(props, option) => (
           <Box
             component="li"
@@ -107,17 +106,15 @@ const SearchForm = () => {
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               alt=""
             />
-            {option.label} ({option.code}) +{option.phone}
+            {option.label} ({option.code})
           </Box>
         )}
         renderInput={(params) => (
           <TextField
             {...params}
             label="Přílet do"
-            inputProps={{
-              ...params.inputProps,
-              autoComplete: "new-password", // disable autocomplete and autofill
-            }}
+            value={to}
+            onChange={(newValue) => setTo(newValue)}
           />
         )}
       />
@@ -137,10 +134,10 @@ const SearchForm = () => {
         <Slider
           className="slider"
           aria-label="Custom marks"
-          defaultValue={2}
           getAriaValueText={valuetext}
-          step={1}
           marks={marksDuration}
+          value={duration}
+          onChange={(newValue) => setDuration(newValue)}
         />
       </Box>
       <Button variant="outlined" className="myBtn">
