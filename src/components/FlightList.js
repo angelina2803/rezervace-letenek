@@ -7,6 +7,7 @@ const FlightList = ({ flights = [] }) => {
         { field: "from", headerName: "From", width: 80 },
         { field: "to", headerName: "To", width: 130 },
         { field: "departure", headerName: "Departure", width: 180 },
+        { field: "arrival", headerName: " Arrival", width: 180 },
         { field: "duration", headerName: "Duration", width: 130 },
         { field: "price", headerName: "Price", width: 130 },
       ];
