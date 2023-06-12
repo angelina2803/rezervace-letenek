@@ -3,7 +3,7 @@ import "./styles/App.css";
 import SearchForm from "./components/SearchForm";
 import axios from "axios";
 import FlightList from "./components/FlightList";
-import RezervationForm from "./components/RezervationForm";
+import ReservationForm from "./components/ReservationForm";
 
 function App() {
   const [flights, setFlights] = useState([]);
@@ -46,7 +46,7 @@ function App() {
     <div className="App">
       <SearchForm />
       <FlightList flights={flights} />
-      <RezervationForm/>
+      <ReservationForm/>
 
     </div>
   );
