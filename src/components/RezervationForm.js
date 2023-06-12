@@ -53,7 +53,30 @@ const RezervationForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const openAlertForm = () => {
-    setShowAlert(true);
+    const inputValueName = document.getElementById(
+      "input-with-icon-adornment"
+    ).value;
+    const inputValueSurname = document.getElementById(
+      "input-with-icon-textfield"
+    ).value;
+    const inputValueSeats = document.getElementById("input-list-seat").value;
+    if (
+      inputValueSurname === "" ||
+      inputValueName === "" ||
+      inputValueSeats === ""
+    ) {
+      alert("Vyplňte prosím vstupní pole.");
+    } else {
+      setShowAlert(true);
+      var outputElement = document.getElementById("output");
+      outputElement.innerHTML =
+        "Jmeno cestujícího: " +
+        inputValueName +
+        "<br>Příjmení cestujícího: " +
+        inputValueSurname +
+        "<br>Místo: " +
+        inputValueSeats;
+    }
   };
 
   return (
@@ -104,6 +127,7 @@ const RezervationForm = () => {
           {/* další pole pro údaje o cestujícím */}
           <p className="text2">Vyberte si místo v letadle</p>
           <List
+            id="input-list-seat"
             dense
             sx={{
               width: "100%",
@@ -143,7 +167,8 @@ const RezervationForm = () => {
               <Alert severity="success">
                 <AlertTitle>Úspěšná rezervace</AlertTitle>
                 Vaše rezervace byla úspěšně dokončena. Děkujeme za váš zájem o
-                naše služby. 
+                naše služby.
+                <div id="output" class="outpitBlock"></div>
               </Alert>
             </Stack>
           )}

@@ -33,6 +33,11 @@ h2{
 h4 {
 	font-size: 36px;
 }
+.textLabel{
+  margin-top:20px;
+  font-size: 16px;
+  color: rgb(116, 116, 116);
+}
 /* Uvod */
 .text{
   width: 1000px;
@@ -71,4 +76,7 @@ h4 {
   margin-top: 20px;
   margin-bottom: 20px;
   width: 400px;
+}
+.outpitBlock{
+  margin-top: 20px;
 }

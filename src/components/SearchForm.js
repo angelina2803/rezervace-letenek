@@ -543,7 +543,9 @@ const SearchForm = () => {
           />
         </DemoContainer>
       </LocalizationProvider>
+      
       <Box sx={{ width: 1000, marginBottom: '20px' }}>
+      <p className="textLabel">Delka letů</p>
         <Slider
           className="slider"
           aria-label="Custom marks"
@@ -552,6 +554,7 @@ const SearchForm = () => {
           step={1}
           marks={marks}
         />
+    
       </Box>
       <Button variant="outlined" className="myBtn">
         Vyhledat{" "}
