@@ -11,11 +11,11 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
 const SearchForm = ({search}) => {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
   const [departure, setDeparture] = useState(dayjs("2023-06-10"));
   const [arrival, setArrival] = useState(dayjs("2023-06-10"));
-  const [duration, setDuration] = useState("");
+  const [duration, setDuration] = useState();
   
   const handleClick = (e) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ const SearchForm = ({search}) => {
       />
       <Autocomplete
         value={to}
-        onChange={(newValue) => setTo(newValue)}
+        onChange={(newValue) => console.log(newValue)}
         label="Přílet do"
         className="autocomplete"
         id="country-select-demo"
@@ -140,12 +140,12 @@ const SearchForm = ({search}) => {
           <DatePicker 
             label="Datum odletu"
              value={departure}
-             onChange={(newValue) => setDeparture(newValue)}
+             onChange={(newValue) => console.log(newValue)}
           />
           <DatePicker
             label="Datum návratu"
             value={arrival}
-            onChange={(newValue) => setArrival(newValue)}
+            onChange={(newValue) => console.log(newValue)}
           />
         </DemoContainer>
       </LocalizationProvider>
