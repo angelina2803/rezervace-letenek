@@ -10,14 +10,31 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
-const SearchForm = () => {
-  const [value, setValue] = React.useState(dayjs("2023-06-12"));
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState();
-  const [duration, setDuration] = useState();
+const SearchForm = ({search}) => {
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [departure, setDeparture] = useState(dayjs("2023-06-12"));
+  const [arrival, setArrival] = useState(dayjs("2023-06-10"));
+  const [duration, setDuration] = useState("");
   
+  const handleClick = (e) => {
+    e.preventDefault();
+    const data = {
+       from, 
+       to,
+       departure,
+       arrival,
+       duration,
+    }
+    search(data);
 
+    setFrom('');
+    setTo('');
+    setDeparture('');
+    setArrival('');
+    setDuration('');
 
+  }
   const countries = [
     { code: "CZ", label: "Prague"},
     { code: "FR", label: "Paris"},
@@ -120,11 +137,14 @@ const SearchForm = () => {
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label="Datum odletu" defaultValue={dayjs("2023-06-10")} />
+          <DatePicker label="Datum odletu" defaultValue={dayjs("2023-06-10")} 
+             value={departure}
+             onChange={(newValue) => setDeparture(newValue)}
+          />
           <DatePicker
             label="Datum návratu"
-            value={value}
-            onChange={(newValue) => setValue(newValue)}
+            value={arrival}
+            onChange={(newValue) => setArrival(newValue)}
           />
         </DemoContainer>
       </LocalizationProvider>
@@ -140,7 +160,7 @@ const SearchForm = () => {
           onChange={(newValue) => setDuration(newValue)}
         />
       </Box>
-      <Button variant="outlined" className="myBtn">
+      <Button variant="outlined" className="myBtn" onClick={handleClick}>
         Vyhledat{" "}
         <svg
           xmlns="http://www.w3.org/2000/svg"

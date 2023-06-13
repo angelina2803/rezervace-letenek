@@ -20,31 +20,33 @@ function App() {
       });
   }, []);
 
-  // const getSearch = async ({ from, to, departure, arrival, duration }) => {
+  const getSearch = async ({ from, to, departure, arrival, duration }) => {
+    try {
+      const { data } = await axios.get("data.json");
+      
+      const filteredFlights = data.filter(
+        (flight) =>
+          flight.from === from &&
+          flight.to === to &&
+          flight.departure === departure &&
+          flight.arrival === arrival &&
+          flight.duration === duration
 
-  //     const { data } = await axios.get("data.json");
-  //     const filteredFlights = data.filter(
-  //       (flight) =>
-  //         flight.from === from &&
-  //         flight.to === to &&
-  //         flight.departure === departure &&
-  //         flight.arrival === arrival &&
-  //         flight.duration === duration
-  //     );
-       
-  //     for (let i = 0; i < data.length; i++) {
-  //       const flight = data[i];
-  //       if (filteredFlights === inputValue) {
-  //         console.log(flight);
-  //       }
-  //     }
-  //   }
+      );
+
+      setFlights(from, to, departure, arrival, duration )
   
-  // getSearch();
+      return filteredFlights;
+    } catch (error) {
+      console.error("Chyba při získávání dat:", error);
+      return [];
+    }
 
+  };
+  
   return (
     <div className="App">
-      <SearchForm />
+      <SearchForm search={getSearch}/>
       <FlightList flights={flights} />
       <ReservationForm/>
 
