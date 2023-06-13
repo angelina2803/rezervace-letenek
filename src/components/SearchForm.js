@@ -60,7 +60,7 @@ const SearchForm = ({search}) => {
       label: "2h",
     },
     {
-      value: 30,
+      value: 35,
       label: "3h",
     },
     {
@@ -77,7 +77,7 @@ const SearchForm = ({search}) => {
     <form className="formAdd">
       <Autocomplete
        value={from}
-       onChange={(newValue) => console.log(newValue)}
+       onChange={(event,newValue) => setFrom(newValue)}
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
         options={countries}
@@ -105,12 +105,12 @@ const SearchForm = ({search}) => {
         )}
       />
       <Autocomplete
-        value={to}
-        onChange={(newValue) => console.log(newValue)}
         label="Přílet do"
         className="autocomplete"
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
+        value={to}
+        onChange={(event,newValue) => setTo(newValue)}
         options={countries}
         renderOption={(props, option) => (
           <Box
@@ -139,13 +139,13 @@ const SearchForm = ({search}) => {
         <DemoContainer components={["DatePicker", "DatePicker"]}>
           <DatePicker 
             label="Datum odletu"
-             value={departure}
-             onChange={(newValue) => console.log(newValue)}
+             value={departure.format("YYYY-MM-DD")}
+             onChange={(event,newValue) => setDeparture(newValue)}
           />
           <DatePicker
             label="Datum návratu"
-            value={arrival}
-            onChange={(newValue) => console.log(newValue)}
+            value={arrival.format("YYYY-MM-DD")}
+            onChange={(event,newValue) => setArrival(newValue)}
           />
         </DemoContainer>
       </LocalizationProvider>
@@ -158,7 +158,7 @@ const SearchForm = ({search}) => {
           getAriaValueText={valuetext}
           marks={marksDuration}
           value={duration}
-          onChange={(newValue) => setDuration(newValue)}
+          onChange={(event,newValue) => setDuration(newValue)}
         />
       </Box>
       <Button variant="outlined" className="myBtn" onClick={handleClick}>
