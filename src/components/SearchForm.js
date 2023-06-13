@@ -13,7 +13,7 @@ import Slider from "@mui/material/Slider";
 const SearchForm = ({search}) => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [departure, setDeparture] = useState(dayjs("2023-06-12"));
+  const [departure, setDeparture] = useState(dayjs("2023-06-10"));
   const [arrival, setArrival] = useState(dayjs("2023-06-10"));
   const [duration, setDuration] = useState("");
   
@@ -76,6 +76,8 @@ const SearchForm = ({search}) => {
   return (
     <form className="formAdd">
       <Autocomplete
+       value={from}
+       onChange={(newValue) => console.log(newValue)}
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
         options={countries}
@@ -99,12 +101,12 @@ const SearchForm = ({search}) => {
           <TextField
             {...params}
             label="Přidat letiště"
-            value={from}
-            onChange={(newValue) => setFrom(newValue)}
           />
         )}
       />
       <Autocomplete
+        value={to}
+        onChange={(newValue) => setTo(newValue)}
         label="Přílet do"
         className="autocomplete"
         id="country-select-demo"
@@ -130,14 +132,13 @@ const SearchForm = ({search}) => {
           <TextField
             {...params}
             label="Přílet do"
-            value={to}
-            onChange={(newValue) => setTo(newValue)}
           />
         )}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker label="Datum odletu" defaultValue={dayjs("2023-06-10")} 
+          <DatePicker 
+            label="Datum odletu"
              value={departure}
              onChange={(newValue) => setDeparture(newValue)}
           />
