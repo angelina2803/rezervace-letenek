@@ -4,6 +4,7 @@ import SearchForm from "./components/SearchForm";
 import axios from "axios";
 import FlightList from "./components/FlightList";
 import ReservationForm from "./components/ReservationForm";
+import dayjs from "dayjs";
 
 function App() {
   const [flights, setFlights] = useState([]);
@@ -23,20 +24,16 @@ function App() {
   const getSearch = async ({ from, to, departure, arrival, duration }) => {
     try {
       const { data } = await axios.get("data.json");
-      
-      const filteredFlights = data.filter(
+
+      setFlights(data.filter(
         (flight) =>
-          flight.from === from &&
-          flight.to === to &&
-          flight.departure === departure &&
-          flight.arrival === arrival &&
-          flight.duration === duration
-
-      );
-
-      setFlights(from, to, departure, arrival, duration )
-  
-      return filteredFlights;
+          flight.from === from.label &&
+          flight.to === to.label &&
+          dayjs(flight.departure).isSame(dayjs(departure), "day") &&
+          dayjs(flight.arrival).isSame(dayjs(arrival), "day") &&
+          flight.duration === `${duration}h`
+      ));
+      
     } catch (error) {
       console.error("Chyba při získávání dat:", error);
       return [];

@@ -8,76 +8,54 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
-import Slider from "@mui/material/Slider";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-const SearchForm = ({search}) => {
+const SearchForm = ({ search }) => {
   const [from, setFrom] = useState();
   const [to, setTo] = useState();
-  const [departure, setDeparture] = useState(dayjs("2023-06-10"));
-  const [arrival, setArrival] = useState(dayjs("2023-06-10"));
+  const [departure, setDeparture] = useState(dayjs("2023-06-9"));
+  const [arrival, setArrival] = useState(dayjs("2023-06-11"));
   const [duration, setDuration] = useState();
-  
+
   const handleClick = (e) => {
     e.preventDefault();
     const data = {
-       from, 
-       to,
-       departure,
-       arrival,
-       duration,
-    }
+      from,
+      to,
+      departure,
+      arrival,
+      duration,
+    };
     search(data);
 
-    setFrom('');
-    setTo('');
-    setDeparture('');
-    setArrival('');
-    setDuration('');
-
-  }
+    setFrom("");
+    setTo("");
+    setDeparture(dayjs("2023-06-9"));
+    setArrival(dayjs("2023-06-11"));
+    setDuration("");
+  };
   const countries = [
-    { code: "CZ", label: "Prague"},
-    { code: "FR", label: "Paris"},
-    { code: "IT", label: "Rome"},
+    { code: "CZ", label: "Prague" },
+    { code: "FR", label: "Paris" },
+    { code: "IT", label: "Rome" },
     { code: "GB", label: "London" },
-    { code: "ES", label: "Barcelona"},
+    { code: "ES", label: "Barcelona" },
     { code: "DE", label: "Berlin" },
     { code: "AT", label: "Vienna" },
-    { code: "PT", label: "Lisbon"},
-    { code: "GR", label: "Athens"},
-    { code: "ES", label: "Madrid"},
-    { code: "NL", label: "Amsterdam"},
-
+    { code: "PT", label: "Lisbon" },
+    { code: "GR", label: "Athens" },
+    { code: "ES", label: "Madrid" },
+    { code: "NL", label: "Amsterdam" },
   ];
-
-  const marksDuration = [
-    {
-      value: 0,
-      label: "1h",
-    },
-    {
-      value: 20,
-      label: "2h",
-    },
-    {
-      value: 35,
-      label: "3h",
-    },
-    {
-      value: 100,
-      label: "10h",
-    },
-  ];
-
-  function valuetext(value) {
-    return `${value}`;
-  }
 
   return (
     <form className="formAdd">
       <Autocomplete
-       value={from}
-       onChange={(event,newValue) => setFrom(newValue)}
+        value={from}
+        onChange={(event, newValue) => setFrom(newValue)}
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
         options={countries}
@@ -98,10 +76,7 @@ const SearchForm = ({search}) => {
           </Box>
         )}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Přidat letiště"
-          />
+          <TextField {...params} label="Přidat letiště" />
         )}
       />
       <Autocomplete
@@ -110,7 +85,7 @@ const SearchForm = ({search}) => {
         id="country-select-demo"
         sx={{ width: 1000, heigh: 40 }}
         value={to}
-        onChange={(event,newValue) => setTo(newValue)}
+        onChange={(event, newValue) => setTo(newValue)}
         options={countries}
         renderOption={(props, option) => (
           <Box
@@ -128,39 +103,40 @@ const SearchForm = ({search}) => {
             {option.label} ({option.code})
           </Box>
         )}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Přílet do"
-          />
-        )}
+        renderInput={(params) => <TextField {...params} label="Přílet do" />}
       />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={["DatePicker", "DatePicker"]}>
-          <DatePicker 
+          <DatePicker
             label="Datum odletu"
-             value={departure.format("YYYY-MM-DD")}
-             onChange={(event,newValue) => setDeparture(newValue)}
+            value={departure}
+            onChange={(newValue) => setDeparture(newValue?.toDate())}
           />
           <DatePicker
             label="Datum návratu"
-            value={arrival.format("YYYY-MM-DD")}
-            onChange={(event,newValue) => setArrival(newValue)}
+            value={arrival}
+            onChange={(newValue) => setArrival(newValue?.toDate())}
           />
         </DemoContainer>
       </LocalizationProvider>
 
-      <Box sx={{ width: 1000, marginBottom: "20px" }}>
-        <p className="textLabel">Delka letů</p>
-        <Slider
-          className="slider"
-          aria-label="Custom marks"
-          getAriaValueText={valuetext}
-          marks={marksDuration}
-          value={duration}
-          onChange={(event,newValue) => setDuration(newValue)}
-        />
+      <Box sx={{ minWidth: 120, marginTop: "20px", marginBottom: "20px" }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Delka letů</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={duration}
+            label="Delka letů"
+            onChange={(event) => setDuration(event.target.value)}
+          >
+            <MenuItem value={1}>1h</MenuItem>
+            <MenuItem value={2}>2h</MenuItem>
+            <MenuItem value={3}>3h</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
+
       <Button variant="outlined" className="myBtn" onClick={handleClick}>
         Vyhledat{" "}
         <svg

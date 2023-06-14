@@ -7,33 +7,17 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
 import Modal from "@mui/material/Modal";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 const ReservationForm = () => {
-
-  
-  const [checked, setChecked] = React.useState([1]);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
+  const [name, setName] = useState();
+  const [surname, setSurname] = useState();
+  const [seats, setSeats] = useState([]);
 
   //   Modal
   const style = {
@@ -54,32 +38,9 @@ const ReservationForm = () => {
 
   const [showAlert, setShowAlert] = useState(false);
 
-  // const openAlertForm = () => {
-  //   const inputValueName = document.getElementById(
-  //     "input-with-icon-adornment"
-  //   ).value;
-  //   const inputValueSurname = document.getElementById(
-  //     "input-with-icon-textfield"
-  //   ).value;
-  //   const inputValueSeats = document.getElementById("input-list-seat").value;
-  //   if (
-  //     inputValueSurname === "" ||
-  //     inputValueName === "" ||
-  //     inputValueSeats === ""
-  //   ) {
-  //     alert("Vyplňte prosím vstupní pole.");
-  //   } else {
-  //     setShowAlert(true);
-  //     var outputElement = document.getElementById("output");
-  //     outputElement.innerHTML =
-  //       "Jmeno cestujícího: " +
-  //       inputValueName +
-  //       "<br>Příjmení cestujícího: " +
-  //       inputValueSurname +
-  //       "<br>Místo: " +
-  //       inputValueSeats;
-  //   }
-  // };
+  const openAlertForm = () => {
+    setShowAlert(true);
+  };
 
   return (
     <div className="containerModal">
@@ -99,7 +60,11 @@ const ReservationForm = () => {
             cestovním dokladu.
           </p>
           <Box sx={{ "& > :not(style)": { m: 1 } }} className="UserInfo">
-            <FormControl variant="standard">
+            <FormControl
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              variant="standard"
+            >
               <InputLabel htmlFor="input-with-icon-adornment">Jméno</InputLabel>
               <Input
                 className="UserInfo"
@@ -112,6 +77,8 @@ const ReservationForm = () => {
               />
             </FormControl>
             <TextField
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
               className="UserInfo"
               id="input-with-icon-textfield"
               label="Prijmení"
@@ -125,52 +92,50 @@ const ReservationForm = () => {
               variant="standard"
             />
           </Box>
-
           {/* další pole pro údaje o cestujícím */}
           <p className="text2">Vyberte si místo v letadle</p>
-          <List
-            id="input-list-seat"
-            dense
-            sx={{
-              width: "100%",
-              maxWidth: 360,
-              bgcolor: "background.paper",
-              marginBottom: "30px",
-            }}
-          >
-            {["A1", "A2", "B1", "B2"].map((value) => {
-              const labelId = `checkbox-list-secondary-label-${value}`;
-              return (
-                <ListItem
-                  key={value}
-                  secondaryAction={
-                    <Checkbox
-                      edge="end"
-                      onChange={handleToggle(value)}
-                      checked={checked.indexOf(value) !== -1}
-                      inputProps={{ "aria-labelledby": labelId }}
-                    />
-                  }
-                  disablePadding
-                >
-                  <ListItemButton>
-                    <ListItemText id={labelId} primary={value} />
-                  </ListItemButton>
-                </ListItem>
-              );
-            })}
-          </List>
+          <Box sx={{ minWidth: 120, marginTop: "20px", marginBottom: "20px" }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Místo</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Vyberte si místo v letadle"
+                value={seats}
+                onChange={(event) => setSeats(event.target.value)}
+              >
+                <MenuItem value={1}>A1</MenuItem>
+                <MenuItem value={2}>A2</MenuItem>
+                <MenuItem value={3}>B1</MenuItem>
+                <MenuItem value={4}>B2</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
 
-          <Button variant="outlined" type="submit">
+          <Button variant="outlined" type="submit" onClick={openAlertForm}>
             Rezervovat
           </Button>
+
           {showAlert && (
             <Stack sx={{ width: "100%", marginTop: "20px" }} spacing={2}>
               <Alert severity="success">
                 <AlertTitle>Úspěšná rezervace</AlertTitle>
                 Vaše rezervace byla úspěšně dokončena. Děkujeme za váš zájem o
-                naše služby.
-                <div id="output" class="outpitBlock"></div>
+                naše služby. <br />
+                Jmeno: {name}
+                <br />
+                Prijmení: {surname}
+                <br />
+                Místo v letadle:{" "}
+                {seats === 1
+                  ? "A1"
+                  : seats === 2
+                  ? "A2"
+                  : seats === 3
+                  ? "B1"
+                  : seats === 4
+                  ? "B2"
+                  : ""}
               </Alert>
             </Stack>
           )}

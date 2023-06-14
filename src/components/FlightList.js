@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
-const FlightList = ({ flights = [] }) => {
+const FlightList = ({ flights = []}) => {
     const columns = [
         { field: "id", headerName: "ID", width: 70 },
         { field: "from", headerName: "From", width: 80 },
