@@ -80,3 +80,9 @@ h4 {
 .outpitBlock{
   margin-top: 20px;
 }
+.green-text{
+  background-color: green;
+}
+.red-text{
+  background-color: red;
+}

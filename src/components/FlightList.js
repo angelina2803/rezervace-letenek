@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { GlobalContext } from "./context/GlobalContext";
+import { GlobalContext } from "../context/GlobalContext";
 
 const FlightList = () => {
   const { filteredFlights, setSelectedFlight } = useContext(GlobalContext);

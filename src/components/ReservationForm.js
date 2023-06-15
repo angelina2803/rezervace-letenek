@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
@@ -13,11 +13,14 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import { GlobalContext } from "../context/GlobalContext";
 
 const ReservationForm = () => {
+  const { selectedFlight, setSelectedFlight } = useContext(GlobalContext);
+
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
-  const [seats, setSeats] = useState([]);
+  // const [seats, setSeats] = useState([]);
 
   //   Modal
   const style = {
@@ -94,20 +97,23 @@ const ReservationForm = () => {
           </Box>
           {/* další pole pro údaje o cestujícím */}
           <p className="text2">Vyberte si místo v letadle</p>
-          <Box sx={{ minWidth: 120, marginTop: "20px", marginBottom: "20px" }}>
+          <Box sx={{ minWidth: 110, marginTop: "20px", marginBottom: "20px" }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Místo</InputLabel>
+              <InputLabel id="demo-simple-select-label">
+                Vyberte si místo v letadle
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Vyberte si místo v letadle"
-                value={seats}
-                onChange={(event) => setSeats(event.target.value)}
+                value={selectedFlight}
+                onChange={(event) => setSelectedFlight(event.target.value)}
               >
-                <MenuItem value={1}>A1</MenuItem>
-                <MenuItem value={2}>A2</MenuItem>
-                <MenuItem value={3}>B1</MenuItem>
-                <MenuItem value={4}>B2</MenuItem>
+                {selectedFlight.seats.map((item) => (
+                  <MenuItem className = {item.available ? "green-text" : "red-text"} key={item.id} value={item.id}>
+                    {item.number}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
@@ -122,20 +128,18 @@ const ReservationForm = () => {
                 <AlertTitle>Úspěšná rezervace</AlertTitle>
                 Vaše rezervace byla úspěšně dokončena. Děkujeme za váš zájem o
                 naše služby. <br />
-                Jmeno: {name}
+                Jmeno cestujícího: {name}
                 <br />
-                Prijmení: {surname}
+                Prijmení cestujícího: {surname}
                 <br />
-                Místo v letadle:{" "}
-                {seats === 1
-                  ? "A1"
-                  : seats === 2
-                  ? "A2"
-                  : seats === 3
-                  ? "B1"
-                  : seats === 4
-                  ? "B2"
-                  : ""}
+                Místo v letadle:
+                <br />
+                Odletové místo: {selectedFlight.from} <br />
+                Cílové destinace: {selectedFlight.to} <br />
+                Datum odletu:{selectedFlight.departure} <br />
+                Datum návratu:{selectedFlight.arrival} <br />
+                Delka letů:{selectedFlight.duration} <br />
+                Cena letů:{selectedFlight.price}
               </Alert>
             </Stack>
           )}
