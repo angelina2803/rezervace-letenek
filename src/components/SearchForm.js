@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import dayjs from "dayjs";
+import { GlobalContext } from "../context/GlobalContext";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -13,43 +14,54 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-const SearchForm = ({ search }) => {
-  const [from, setFrom] = useState();
-  const [to, setTo] = useState();
-  const [departure, setDeparture] = useState(dayjs("2023-06-9"));
-  const [arrival, setArrival] = useState(dayjs("2023-06-11"));
-  const [duration, setDuration] = useState();
+const countries = [
+  { code: "CZ", label: "Prague" },
+  { code: "FR", label: "Paris" },
+  { code: "IT", label: "Rome" },
+  { code: "GB", label: "London" },
+  { code: "ES", label: "Barcelona" },
+  { code: "DE", label: "Berlin" },
+  { code: "AT", label: "Vienna" },
+  { code: "PT", label: "Lisbon" },
+  { code: "GR", label: "Athens" },
+  { code: "ES", label: "Madrid" },
+  { code: "NL", label: "Amsterdam" },
+];
 
-  const handleClick = (e) => {
+const SearchForm = () => {
+  const {
+    flights,
+    setFilteredFlights,
+    from,
+    setFrom,
+    to,
+    setTo,
+    departure,
+    setDeparture,
+    arrival,
+    setArrival,
+    duration,
+    setDuration,
+  } = useContext(GlobalContext);
+
+  const search = (e) => {
     e.preventDefault();
-    const data = {
-      from,
-      to,
-      departure,
-      arrival,
-      duration,
-    };
-    search(data);
-
-    setFrom("");
-    setTo("");
-    setDeparture(dayjs("2023-06-9"));
-    setArrival(dayjs("2023-06-11"));
-    setDuration("");
+    let result = flights;
+    if (from) result = result.filter((flight) => flight.from === from?.label);
+    if (to) result = result.filter((flight) => flight.to === to?.label);
+    if (departure)
+      result = result.filter((flight) =>
+        dayjs(flight.departure).isSame(departure, "day")
+      );
+    if (arrival)
+      result = result.filter((flight) =>
+        dayjs(flight.arrival).isSame(arrival, "day")
+      );
+    if (duration)
+      result = result.filter((flight) => flight.duration === `${duration}h`);
+    setFilteredFlights(result);
   };
-  const countries = [
-    { code: "CZ", label: "Prague" },
-    { code: "FR", label: "Paris" },
-    { code: "IT", label: "Rome" },
-    { code: "GB", label: "London" },
-    { code: "ES", label: "Barcelona" },
-    { code: "DE", label: "Berlin" },
-    { code: "AT", label: "Vienna" },
-    { code: "PT", label: "Lisbon" },
-    { code: "GR", label: "Athens" },
-    { code: "ES", label: "Madrid" },
-    { code: "NL", label: "Amsterdam" },
-  ];
+
 
   return (
     <form className="formAdd">
@@ -72,7 +84,7 @@ const SearchForm = ({ search }) => {
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               alt=""
             />
-            {option.label} ({option.code})
+            {option.label}
           </Box>
         )}
         renderInput={(params) => (
@@ -100,7 +112,7 @@ const SearchForm = ({ search }) => {
               srcSet={`https://flagcdn.com/w40/${option.code.toLowerCase()}.png 2x`}
               alt=""
             />
-            {option.label} ({option.code})
+            {option.label}
           </Box>
         )}
         renderInput={(params) => <TextField {...params} label="Přílet do" />}
@@ -137,7 +149,7 @@ const SearchForm = ({ search }) => {
         </FormControl>
       </Box>
 
-      <Button variant="outlined" className="myBtn" onClick={handleClick}>
+      <Button variant="outlined" className="myBtn" onClick={search}>
         Vyhledat{" "}
         <svg
           xmlns="http://www.w3.org/2000/svg"

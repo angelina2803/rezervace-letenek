@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
+import { GlobalContext } from "./context/GlobalContext";
 import "./styles/App.css";
 import SearchForm from "./components/SearchForm";
 import axios from "axios";
@@ -7,44 +8,33 @@ import ReservationForm from "./components/ReservationForm";
 import dayjs from "dayjs";
 
 function App() {
-  const [flights, setFlights] = useState([]);
+  const { setFlights, setFilteredFlights } = useContext(GlobalContext);
 
+//data from API
   useEffect(() => {
     axios
       .get("/data.json")
       .then((response) => {
-        console.log(response.data);
-        setFlights(response.data);
+        const flights = response.data.map((flight) => {
+          return {
+            ...flight,
+            departure: dayjs(flight.departure).format("MM/DD/YYYY"),
+            arrival: dayjs(flight.arrival).format("MM/DD/YYYY"),
+          };
+        });
+        setFlights(flights);
+        setFilteredFlights(flights);
       })
       .catch((error) => {
+        console.error("Chyba při získávání dat:", error);
         console.error(error);
       });
   }, []);
-
-  const getSearch = async ({ from, to, departure, arrival, duration }) => {
-    try {
-      const { data } = await axios.get("data.json");
-
-      setFlights(data.filter(
-        (flight) =>
-          flight.from === from.label &&
-          flight.to === to.label &&
-          dayjs(flight.departure).isSame(dayjs(departure), "day") &&
-          dayjs(flight.arrival).isSame(dayjs(arrival), "day") &&
-          flight.duration === `${duration}h`
-      ));
-      
-    } catch (error) {
-      console.error("Chyba při získávání dat:", error);
-      return [];
-    }
-
-  };
   
   return (
     <div className="App">
-      <SearchForm search={getSearch}/>
-      <FlightList flights={flights} />
+      <SearchForm/>
+      <FlightList/>
       <ReservationForm/>
 
     </div>
