@@ -136,7 +136,7 @@ const ReservationForm = () => {
                 <br />
                 Prijmení cestujícího: {surname}
                 <br />
-                Místo v letadle:
+                {/* Místo v letadle: {selectedFlight.seat.find((seat) => seat.id === seats[0])} */}
                 <br />
                 Odletové místo: {selectedFlight.from} <br />
                 Cílové destinace: {selectedFlight.to} <br />
