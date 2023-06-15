@@ -20,7 +20,7 @@ const ReservationForm = () => {
 
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
-  // const [seats, setSeats] = useState([]);
+  const [seats, setSeats] = useState([]);
 
   //   Modal
   const style = {
@@ -106,13 +106,17 @@ const ReservationForm = () => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Vyberte si místo v letadle"
-                value={selectedFlight}
-                onChange={(event) => setSelectedFlight(event.target.value)}
+                value={seats}
+                onChange={(event) => setSeats(event.target.value)}
               >
-                {selectedFlight.seats.map((item) => (
-                  <MenuItem className = {item.available ? "green-text" : "red-text"} key={item.id} value={item.id}>
-                    {item.number}
-                  </MenuItem>
+                {selectedFlight?.seats.map((item) => (
+                 <MenuItem
+                 disabled={!item.available}
+                 key={item.id}
+                 value={item.id}
+               >
+                 {item.number} 
+               </MenuItem>
                 ))}
               </Select>
             </FormControl>
