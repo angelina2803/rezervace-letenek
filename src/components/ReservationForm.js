@@ -19,12 +19,15 @@ import { Troubleshoot } from "@mui/icons-material";
 
 const ReservationForm = () => {
   const { selectedFlight, setSelectedFlight } = useContext(GlobalContext);
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [selectedSeat, setSelectedSeat] = useState();
-
 
   const onSubmit = (data) => {
     console.log(data);
@@ -84,73 +87,75 @@ const ReservationForm = () => {
             cestovním dokladu.
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
-          <Box sx={{ "& > :not(style)": { m: 1 } }} className="UserInfo">
-            <FormControl
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              variant="standard"
-            >
-              <InputLabel htmlFor="name-input">Jméno</InputLabel>
-              <Input
-                className="UserInfo"
-                id="name-input"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                }
-                {...register("name", { ...validationRules })}
-            />
-            {errors.name && <p>{errors.name.message}</p>}
-            </FormControl>
-            <TextField
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
-              className="UserInfo"
-              id="input-with-icon-textfield"
-              label="Prijmení"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="standard"
-              {...register("surname", { ...validationRules })}
-          />
-          {errors.surname && <p>{errors.surname.message}</p>}
-          </Box>
-          {/* další pole pro údaje o cestujícím */}
-          <p className="text2">Vyberte si místo v letadle</p>
-          <Box sx={{ minWidth: 110, marginTop: "20px", marginBottom: "20px" }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                Vyberte si místo v letadle
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Vyberte si místo v letadle"
-                value={selectedSeat}
-                onChange={(event) => setSelectedSeat(event.target.value)}
+            <Box sx={{ "& > :not(style)": { m: 1 } }} className="UserInfo">
+              <FormControl
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                variant="standard"
               >
-                {selectedFlight?.seats.map((item) => (
-                 <MenuItem
-                 disabled={!item.available}
-                 key={item.id}
-                 value={item.id}
-               >
-                 {item.number} 
-               </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Box>
+                <InputLabel htmlFor="name-input">Jméno</InputLabel>
+                <Input
+                  className="UserInfo"
+                  id="name-input"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <AccountCircle />
+                    </InputAdornment>
+                  }
+                  {...register("name", { ...validationRules })}
+                />
+                {errors.name && <p>{errors.name.message}</p>}
+              </FormControl>
+              <TextField
+                {...register("surname", { ...validationRules })}
+                variant="standard"
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+                className="UserInfo"
+                id="input-surname"
+                label="Prijmení"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              {errors.surname && <p>{errors.surname.message}</p>}
+            </Box>
+            {/* další pole pro údaje o cestujícím */}
+            <p className="text2">Vyberte si místo v letadle</p>
+            <Box
+              sx={{ minWidth: 110, marginTop: "20px", marginBottom: "20px" }}
+            >
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Vyberte si místo v letadle
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  label="Vyberte si místo v letadle"
+                  value={selectedSeat}
+                  onChange={(event) => setSelectedSeat(event.target.value)}
+                >
+                  {selectedFlight?.seats.map((item) => (
+                    <MenuItem
+                      disabled={!item.available}
+                      key={item.id}
+                      value={item.id}
+                    >
+                      {item.number}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Box>
 
-          <Button variant="outlined" type="submit" onClick={openAlertForm}>
-            Rezervovat
-          </Button>
+            <Button variant="outlined" type="submit" onClick={openAlertForm}>
+              Rezervovat
+            </Button>
           </form>
           {showAlert && (
             <Stack sx={{ width: "100%", marginTop: "20px" }} spacing={2}>
@@ -162,7 +167,11 @@ const ReservationForm = () => {
                 <br />
                 Prijmení cestujícího: {surname}
                 <br />
-                Místo v letadle: {selectedFlight?.seats.find((seat) => seat.id === selectedSeat)?.number} 
+                Místo v letadle:{" "}
+                {
+                  selectedFlight?.seats.find((seat) => seat.id === selectedSeat)
+                    ?.number
+                }
                 <br />
                 Odletové místo: {selectedFlight.from} <br />
                 Cílové destinace: {selectedFlight.to} <br />
@@ -175,7 +184,6 @@ const ReservationForm = () => {
           )}
         </Box>
       </Modal>
-      
     </div>
   );
 };

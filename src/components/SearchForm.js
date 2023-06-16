@@ -62,7 +62,6 @@ const SearchForm = () => {
     setFilteredFlights(result);
   };
 
-
   return (
     <form className="formAdd">
       <Autocomplete

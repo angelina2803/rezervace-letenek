@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 function App() {
   const { setFlights, setFilteredFlights } = useContext(GlobalContext);
 
-//data from API
+  //data from API
   useEffect(() => {
     axios
       .get("/data.json")
@@ -30,13 +30,12 @@ function App() {
         console.error(error);
       });
   }, []);
-  
+
   return (
     <div className="App">
-      <SearchForm/>
-      <FlightList/>
-      <ReservationForm/>
-
+      <SearchForm />
+      <FlightList />
+      <ReservationForm />
     </div>
   );
 }
