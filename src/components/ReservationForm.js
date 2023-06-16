@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
@@ -14,13 +15,29 @@ import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { GlobalContext } from "../context/GlobalContext";
+import { Troubleshoot } from "@mui/icons-material";
 
 const ReservationForm = () => {
   const { selectedFlight, setSelectedFlight } = useContext(GlobalContext);
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const [name, setName] = useState();
   const [surname, setSurname] = useState();
   const [selectedSeat, setSelectedSeat] = useState();
+
+
+  const onSubmit = (data) => {
+    console.log(data);
+    openAlertForm();
+  };
+
+  const validationRules = {
+    required: "Toto pole je povinné.",
+    minLength: {
+      value: 3,
+      message: "Toto pole musí mít nejméně 3 znaky.",
+    },
+  };
 
   //   Modal
   const style = {
@@ -42,7 +59,11 @@ const ReservationForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const openAlertForm = () => {
-    setShowAlert(true);
+    if (name && surname) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
   };
 
   return (
@@ -62,22 +83,25 @@ const ReservationForm = () => {
             Jméno a příjmení uveďte ve stejném tvaru, v jakém je uvedeno na
             cestovním dokladu.
           </p>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <Box sx={{ "& > :not(style)": { m: 1 } }} className="UserInfo">
             <FormControl
               value={name}
               onChange={(e) => setName(e.target.value)}
               variant="standard"
             >
-              <InputLabel htmlFor="input-with-icon-adornment">Jméno</InputLabel>
+              <InputLabel htmlFor="name-input">Jméno</InputLabel>
               <Input
                 className="UserInfo"
-                id="input-with-icon-adornment"
+                id="name-input"
                 startAdornment={
                   <InputAdornment position="start">
                     <AccountCircle />
                   </InputAdornment>
                 }
-              />
+                {...register("name", { ...validationRules })}
+            />
+            {errors.name && <p>{errors.name.message}</p>}
             </FormControl>
             <TextField
               value={surname}
@@ -93,7 +117,9 @@ const ReservationForm = () => {
                 ),
               }}
               variant="standard"
-            />
+              {...register("surname", { ...validationRules })}
+          />
+          {errors.surname && <p>{errors.surname.message}</p>}
           </Box>
           {/* další pole pro údaje o cestujícím */}
           <p className="text2">Vyberte si místo v letadle</p>
@@ -125,7 +151,7 @@ const ReservationForm = () => {
           <Button variant="outlined" type="submit" onClick={openAlertForm}>
             Rezervovat
           </Button>
-
+          </form>
           {showAlert && (
             <Stack sx={{ width: "100%", marginTop: "20px" }} spacing={2}>
               <Alert severity="success">
@@ -149,6 +175,7 @@ const ReservationForm = () => {
           )}
         </Box>
       </Modal>
+      
     </div>
   );
 };
